@@ -75,11 +75,11 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 
 
 	assets := []Asset{
-		{ID: "asset1",  AssetType:"berries", Weight: 5,  Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate.AddDate(0,0,-8)},
-		{ID: "asset2",  AssetType:"berries", Weight: 5,  Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate.AddDate(0,0,-7)},
-		{ID: "asset3",  AssetType:"apples",  Weight: 10, Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate.AddDate(0,0,-2)},
-		{ID: "asset4",  AssetType:"apples",  Weight: 10, Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate.AddDate(0,0,-1)},
-		{ID: "asset5",  AssetType:"apples",  Weight: 15, Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate},
+		{ID: "asset1",  AssetType:"berries", Weight: 15,  Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate.AddDate(0,0,-7)},
+		{ID: "asset2",  AssetType:"oranges", Weight: 20,  Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate.AddDate(0,0,-6)},
+		{ID: "asset3",  AssetType:"apples",  Weight: 17, Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate.AddDate(0,0,-2)},
+		{ID: "asset4",  AssetType:"bananas",  Weight: 23, Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate.AddDate(0,0,-1)},
+		{ID: "asset5",  AssetType:"tomatoes",  Weight: 25, Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate},
 		{ID: "asset6",  AssetType:"grapes",  Weight: 15, Owner: clientID, OwnerOrg:clientOrgID, Timestamp: timestamp, Creator: creatorDN, SensorData:"", ExpirationDate:expirationDate},
 	  }
   for _, asset := range assets {
@@ -235,7 +235,7 @@ func (s *SmartContract) UpdateSensorData(ctx contractapi.TransactionContextInter
 	}
 
 	if clientID != asset.Owner {
-		return fmt.Errorf("submitting client not authorized to update sensor data, does not own asset")
+		return fmt.Errorf("submitting client not authorized to update sensor data, does not own asset. Owner of asset is %v",asset.Owner)
 	}
 
 	clientOrgID, err := ctx.GetClientIdentity().GetMSPID()
@@ -270,7 +270,7 @@ func (s *SmartContract) DeleteAsset(ctx contractapi.TransactionContextInterface,
 	}
 
 	if clientID != asset.Owner {
-		return fmt.Errorf("submitting client not authorized to delete asset, does not own asset")
+		return fmt.Errorf("submitting client not authorized to delete asset, does not own asset. Owner of asset is %v",asset.Owner)
 	}
 
 	clientOrgID, err := ctx.GetClientIdentity().GetMSPID()
@@ -298,7 +298,7 @@ func (s *SmartContract) DeleteBuyRequest(ctx contractapi.TransactionContextInter
 	}
 
 	if clientID != request.BuyerID {
-		return fmt.Errorf("submitting client not authorized to delete buy request .Not his request. Client is %s and buyer is %s",clientID,request.BuyerID)
+		return fmt.Errorf("submitting client not authorized to delete buy request .Not his request. Client is %s and request was made by %s",clientID,request.BuyerID)
 	}
 	
 	clientOrgID, err := ctx.GetClientIdentity().GetMSPID()
