@@ -19,14 +19,14 @@ const mspOrg1 = 'Org1MSP';
 const mspOrg2 = 'Org2MSP';
 const mspOrg3 = 'Org3MSP';
 
-let org1UserId = 'Farmer';
-let org2UserId = 'Retailer';
-let org3UserId = 'Client';
+let org1UserId = 'George Karl';
+let org2UserId = 'Jim McGinn'; //Mason Bridges
+let org3UserId = 'Jack Porter';
 const assetCollection = 'assetCollection';
 const sharedCollectionOrg2Org3 = 'assetCollection23';
-org1UserId+="b";
-org2UserId+="b";
-org3UserId+="b";
+//org1UserId+="b";
+//org2UserId+="b";
+//org3UserId+="b";
 
 /* Helper Function to connect users to network */
 
@@ -811,9 +811,24 @@ router.get('/retailerFrontPage/getAllAssets', async function  (req,res) {
         
 
         result = await contractOrg2.evaluateTransaction('GetAllAssetsExpiration')
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-        res.end(result);//.toString()
-        // Disconnect from the gateway.
+        let flag=(result.toString()==="");
+        console.log(`Transaction has been evaluated, result is: ${result.toString()} and flag is ${flag}`);
+        //might have to delete
+        
+        if(flag){
+            res.end( Buffer.from(
+                JSON.stringify(
+                    {
+                        errorCLI:"error",
+                        errorMessage:"World State is empty.",
+                        errorStatus:500
+    
+                    })));
+            //the asset can be read
+            
+        }else{
+            res.end(result);
+        }
         gatewayOrg2.disconnect;
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
@@ -835,9 +850,24 @@ router.get('/supermarketFrontPage/getAllAssets', async function  (req,res) {
 
 
         result = await contractOrg3.evaluateTransaction('GetAllAssetsExpiration')
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-        res.end(result);//.toString()
-        // Disconnect from the gateway.
+        let flag=(result.toString()==="");
+        console.log(`Transaction has been evaluated, result is: ${result.toString()} and flag is ${flag}`);
+        //might have to delete
+        
+        if(flag){
+            res.end( Buffer.from(
+                JSON.stringify(
+                    {
+                        errorCLI:"error",
+                        errorMessage:"World State is empty.",
+                        errorStatus:500
+    
+                    })));
+            //the asset can be read
+            
+        }else{
+            res.end(result);
+        }
         gatewayOrg3.disconnect;
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
