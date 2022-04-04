@@ -66,7 +66,7 @@ function SetPrice(props) {
             <h1 className="mt-5">Set selling price for asset</h1>
         
             <div className="form-group w-25 mx-auto">
-                <label htmlFor="assetID" className="col-form-label mx-auto">Asset ID {formInputID}</label>
+                <label htmlFor="assetID" className="col-form-label mx-auto">AssetID {formInputID}</label>
                 {/* col-xs-3 */}
                 <div className="col-sm-10 w-10 mx-auto">
                 <input type="text" className="form-control " required onChange={e=>setFormInputID(e.target.value)} id="assetID" placeholder="asset#"/>
@@ -75,7 +75,7 @@ function SetPrice(props) {
     
           
             <div className="form-group w-25 mx-auto">
-                <label htmlFor="price" className="col-form-label mx-auto">Price{formInputPrice} </label>
+                <label htmlFor="price" className="col-form-label mx-auto">Price {formInputPrice} </label>
                 <div className="col-sm-10 mx-auto">
                 <input type="text" className="form-control" onChange={e=>setFormInputPrice(e.target.value)} id="price" placeholder="Price"/>
                 </div>
@@ -118,7 +118,7 @@ function SetPrice(props) {
                     ):postReply.serverError ?(
                         <Error message={" Error with status "+postReply.errorStatus+". "+postReply.errorMessage[0].toUpperCase()+postReply.errorMessage.slice(1)+"."}backlink={back}/>
                     ):(
-                        <Error message="Plese enter assetID ,price and a tradeId." backlink={back} />
+                        <Error message="Plese enter assetID and price." backlink={back} />
                     )
                 }
             </div>
